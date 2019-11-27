@@ -13,6 +13,20 @@ public class Notepad: UITextView {
 
     var storage: Storage = Storage()
 
+    public var theme: Theme? {
+        get {
+            return self.storage.theme
+        }
+        set {
+            self.storage.theme = newValue
+
+            if let thm = newValue {
+                self.backgroundColor = thm.backgroundColor
+                self.tintColor = thm.tintColor
+            }
+        }
+    }
+
 
 
     /// Creates a new Notepad.
