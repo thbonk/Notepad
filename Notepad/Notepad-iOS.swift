@@ -13,6 +13,8 @@ public class Notepad: UITextView {
 
     var storage: Storage = Storage()
 
+    public var cursorWidth: CGFloat? = nil
+
     public var theme: Theme? {
         get {
             return self.storage.theme
@@ -76,6 +78,19 @@ public class Notepad: UITextView {
 
         layoutManager.addTextContainer(container)
         storage.addLayoutManager(layoutManager)
+    }
+
+    override public func caretRect(for position: UITextPosition) -> CGRect {
+        var rect = super.caretRect(for: position)
+
+        if let width = cursorWidth {
+            let size = CGSize(width: width, height: rect.height + 5)
+            // Calculating center y
+            let y = rect.origin.y - (size.height - rect.size.height)/2
+            rect = CGRect(origin: CGPoint(x: rect.origin.x, y: y), size: size)
+        }
+        
+        return rect
     }
 }
 #endif
